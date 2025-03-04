@@ -54,4 +54,10 @@ public class RestGreetingController {
     public String deleteGreeting() {
         return "{\"message\": \"Hello from DELETE!\"}";
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteGreeting(@PathVariable Long id) {
+        boolean isDeleted = greetingService.deleteGreeting(id);
+        return isDeleted ? ResponseEntity.ok("Greeting deleted successfully.") : ResponseEntity.notFound().build();
+    }
 }
