@@ -1,5 +1,6 @@
 package com.spring.mygreetingapp.controller;
 
+import com.spring.mygreetingapp.model.Greeting;
 import com.spring.mygreetingapp.service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,15 @@ public class RestGreetingController {
         return greetingService.getGreetingMessage(firstName, lastName);
     }
 
+
     @PostMapping
-    public String postGreeting() {
-        return "{\"message\": \"Hello from POST!\"}";
+    public Greeting createGreeting(@RequestParam String message) {
+        return greetingService.saveGreeting(message);
+    }
+
+    @GetMapping("/{id}")
+    public Greeting getGreeting(@PathVariable Long id) {
+        return greetingService.getGreetingById(id);
     }
 
     @PutMapping
