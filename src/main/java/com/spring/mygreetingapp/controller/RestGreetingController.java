@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/greeting")
 public class RestGreetingController {
@@ -20,16 +22,21 @@ public class RestGreetingController {
         return greetingService.getGreetingMessage(firstName, lastName);
     }
 
-
-    @PostMapping
-    public Greeting createGreeting(@RequestParam String message) {
-        return greetingService.saveGreeting(message);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getGreetingById(@PathVariable Long id) {
         Greeting greeting = greetingService.getGreetingById(id);
         return greeting != null ? ResponseEntity.ok(greeting) : ResponseEntity.ok("Greeting not Found");
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllGreetings() {
+        List<?> greetings = greetingService.getAllGreetings();
+        return greetings.isEmpty() ? ResponseEntity.ok("Greeting not Found") : ResponseEntity.ok(greetings);
+    }
+
+    @PostMapping
+    public Greeting createGreeting(@RequestParam String message) {
+        return greetingService.saveGreeting(message);
     }
 
     @PutMapping
