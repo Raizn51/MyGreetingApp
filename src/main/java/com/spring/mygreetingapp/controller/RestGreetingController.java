@@ -44,6 +44,12 @@ public class RestGreetingController {
         return "{\"message\": \"Hello from PUT!\"}";
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Greeting> updateGreeting(@PathVariable Long id, @RequestParam String message) {
+        Greeting updatedGreeting = greetingService.updateGreeting(id, message);
+        return updatedGreeting != null ? ResponseEntity.ok(updatedGreeting) : ResponseEntity.notFound().build();
+    }
+
     @DeleteMapping
     public String deleteGreeting() {
         return "{\"message\": \"Hello from DELETE!\"}";

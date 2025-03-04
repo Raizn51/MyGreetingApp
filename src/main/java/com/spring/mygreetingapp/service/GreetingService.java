@@ -5,7 +5,7 @@ import com.spring.mygreetingapp.repository.GreetingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GreetingService
@@ -37,6 +37,16 @@ public class GreetingService
         } else {
             return "{\"message\": \"Hello World\"}";
         }
+    }
+
+    public Greeting updateGreeting(Long id, String newMessage) {
+        Optional<Greeting> optionalGreeting = greetingRepository.findById(id);
+        if (optionalGreeting.isPresent()) {
+            Greeting greeting = optionalGreeting.get();
+            greeting.setMessage(newMessage);
+            return greetingRepository.save(greeting);
+        }
+        return null;
     }
 
 }
