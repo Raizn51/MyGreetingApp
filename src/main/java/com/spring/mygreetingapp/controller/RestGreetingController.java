@@ -3,6 +3,7 @@ package com.spring.mygreetingapp.controller;
 import com.spring.mygreetingapp.model.Greeting;
 import com.spring.mygreetingapp.service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,8 +27,9 @@ public class RestGreetingController {
     }
 
     @GetMapping("/{id}")
-    public Greeting getGreeting(@PathVariable Long id) {
-        return greetingService.getGreetingById(id);
+    public ResponseEntity<?> getGreetingById(@PathVariable Long id) {
+        Greeting greeting = greetingService.getGreetingById(id);
+        return greeting != null ? ResponseEntity.ok(greeting) : ResponseEntity.ok("Greeting not Found");
     }
 
     @PutMapping
